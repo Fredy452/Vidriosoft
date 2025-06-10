@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
 
 class User extends Authenticatable
 {
@@ -23,7 +24,37 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'phone',
+        'city',
+        'address',
+        'is_admin',
+        'is_active',
     ];
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array<string, string>
+     */
+    protected $attributes = [
+        'is_admin' => false,
+        'is_active' => true,
+        'password' => '12345678', // Default password, should be changed on first login
+    ];
+
+    /**
+     * Bootstrap the model
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($user) {
+            // Solo hashear si el password no ha sido modificado manualmente
+            if ($user->password === '12345678') {
+                $user->password = Hash::make('12345678');
+            }
+        });
+    }
 
     /**
      * The attributes that should be hidden for serialization.
