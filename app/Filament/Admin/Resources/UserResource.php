@@ -16,7 +16,11 @@ class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    // Definimos el nombre del modelo en singular y en plural para la interfaz de usuario
+    protected static ?string $modelLabel = 'Usuario';
+    protected static ?string $pluralModelLabel = 'Usuarios';
+
+    protected static ?string $navigationIcon = 'heroicon-o-user';
 
     public static function form(Form $form): Form
     {
@@ -24,54 +28,65 @@ class UserResource extends Resource
             ->schema([
                 TextInput::make('name')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->label('Nombre'),
                 TextInput::make('email')
                     ->required()
+                    ->unique(User::class, 'email', ignoreRecord: true)
+                    ->validationMessages([
+                        'unique' => 'Este correo electrónico ya está registrado en el sistema',
+                    ])
                     ->email()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->label('Correo Electrónico'),
                 TextInput::make('phone')
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->label('Teléfono'),
                 TextInput::make('city')
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->label('Ciudad'),
                 TextInput::make('address')
-                    ->maxLength(255),
-                TextInput::make('tax_id')
-                    ->maxLength(255),
-                TextInput::make('company_name')
-                    ->maxLength(255),
-                Toggle::make('is_admin'),
-                Toggle::make('is_active'),
+                    ->maxLength(255)
+                    ->label('Dirección'),
+                Toggle::make('is_admin')
+                    ->label('¿Es Administrador?'),
+                Toggle::make('is_active')
+                    ->label('¿Está Activo?')
+                    ->default(true),
             ])->columns(2);
     }
 
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('created_at', 'desc')
             ->columns([
                 TextColumn::make('name')
                     ->sortable()
-                    ->searchable(),
+                    ->searchable()
+                    ->label('Nombre'),
                 TextColumn::make('email')
                     ->sortable()
-                    ->searchable(),
+                    ->searchable()
+                    ->label('Correo Electrónico'),
                 TextColumn::make('phone')
                     ->sortable()
-                    ->searchable(),
+                    ->searchable()
+                    ->label('Teléfono'),
                 TextColumn::make('city')
                     ->sortable()
-                    ->searchable(),
+                    ->searchable()
+                    ->label('Ciudad'),
                 TextColumn::make('address')
                     ->sortable()
-                    ->searchable(),
-                TextColumn::make('company_name')
-                    ->sortable()
-                    ->searchable(),
-                Tables\Columns\BooleanColumn::make('is_admin'),
-                Tables\Columns\BooleanColumn::make('is_active'),
+                    ->searchable()
+                    ->label('Dirección'),
+                Tables\Columns\BooleanColumn::make('is_admin')
+                    ->label('¿Es Administrador?'),
+                Tables\Columns\BooleanColumn::make('is_active')
+                    ->label('¿Está Activo?'),
             ])
-            ->filters([
-
-            ])
+            ->filters([])
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])
