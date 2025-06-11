@@ -60,18 +60,23 @@ class ProviderResource extends Resource
                     ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
+                    ->label('Correo Electrónico')
                     ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('phone')
+                    ->label('Teléfono')
                     ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('city')
+                    ->label('Ciudad')
                     ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('address')
+                    ->label('Dirección')
                     ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('tax_id')
+                    ->label('RUC')
                     ->sortable()
                     ->searchable(),
             ])
