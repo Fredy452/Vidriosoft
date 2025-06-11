@@ -11,6 +11,7 @@ use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
+use Filament\Facades\Filament;
 
 #[Layout('components.layouts.auth')]
 class Login extends Component
@@ -43,7 +44,7 @@ class Login extends Component
         RateLimiter::clear($this->throttleKey());
         Session::regenerate();
 
-        $this->redirectIntended(default: route('dashboard', absolute: false), navigate: true);
+        $this->redirectIntended(default: '/admin', navigate: true);
     }
 
     /**
