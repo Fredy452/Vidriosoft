@@ -32,6 +32,10 @@ class ProviderResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('email')
                     ->required()
+                    ->unique(Provider::class, 'email', ignoreRecord: true)
+                    ->validationMessages([
+                        'unique' => 'Este correo electrónico ya está registrado en el sistema',
+                    ])
                     ->email()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('phone')

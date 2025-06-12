@@ -11,6 +11,8 @@ use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\SelectFilter;
 
 class UserResource extends Resource
 {
@@ -86,7 +88,15 @@ class UserResource extends Resource
                 Tables\Columns\BooleanColumn::make('is_active')
                     ->label('¿Está Activo?'),
             ])
-            ->filters([])
+            ->filters([
+                // Filtros personalizados
+                SelectFilter::make('is_admin')
+                    ->label('Administrador')
+                    ->options([
+                        true => 'Sí',
+                        false => 'No',
+                    ]),
+            ])
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])
