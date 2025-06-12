@@ -28,7 +28,7 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('name')
+                TextInput::make('')
                     ->required()
                     ->maxLength(255)
                     ->label('Nombre'),

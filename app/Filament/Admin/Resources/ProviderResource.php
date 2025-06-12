@@ -27,10 +27,11 @@ class ProviderResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
-                    ->label('Provider Name')
+                    ->label('Nombre de Usuario')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('email')
+                    ->label('Correo Electrónico')
                     ->required()
                     ->unique(Provider::class, 'email', ignoreRecord: true)
                     ->validationMessages([
@@ -39,12 +40,17 @@ class ProviderResource extends Resource
                     ->email()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('phone')
+                    ->label('Teléfono')
+                    ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('city')
+                    ->label('Ciudad')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('address')
+                    ->label('Dirección')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('tax_id')
+                    ->label('Identificación Fiscal')
                     ->maxLength(255),
             ])->columns(2);
     }
@@ -58,18 +64,23 @@ class ProviderResource extends Resource
                     ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
+                    ->label('Correo Electrónico')
                     ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('phone')
+                    ->label('Teléfono')
                     ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('city')
+                    ->label('Ciudad')
                     ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('address')
+                    ->label('Dirección')
                     ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('tax_id')
+                    ->label('RUC')
                     ->sortable()
                     ->searchable(),
             ])
