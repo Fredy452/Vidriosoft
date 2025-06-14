@@ -7,7 +7,7 @@ use App\Models\Category;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables\Table;
-use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use \Illuminate\Support\Str;
@@ -19,7 +19,7 @@ use Filament\Tables\Actions\DeleteBulkAction;
 class CategoryResource extends Resource
 {
     protected static ?string $model = Category::class;
-
+    protected static ?string $navigationGroup = 'Inventario';
     protected static ?string $modelLabel = 'Categoría';
     protected static ?string $pluralModelLabel = 'Categorías';
 
@@ -30,28 +30,27 @@ class CategoryResource extends Resource
     {
         return $form
             ->schema([
-            Grid::make(2)
-            ->schema([
-                TextInput::make('name')
-                    ->required()
-                    ->label('Nombre de la Categoría')
-                    ->maxLength(255)
-                    ->live( debounce: 500 ) // Actualiza en tiempo real mientras se escribe
-                    ->afterStateUpdated(function ($state, $set) {
-                        $set('slug', Str::slug($state));
-                    }),
-                TextInput::make('slug')
-                    ->maxLength(255)
-                    ->disabled()
-                    ->dehydrated(true)
-                    ->unique(Category::class, 'slug', ignoreRecord: true),
-                Textarea::make('description')
-                    ->label('Descripción')
-                    ->columnSpan(2),
-            ]),
+                Section::make()
+                    ->schema([
+                        TextInput::make('name')
+                            ->required()
+                            ->label('Nombre de la Categoría')
+                            ->maxLength(255)
+                            ->live(debounce: 500) // Actualiza en tiempo real mientras se escribe
+                            ->afterStateUpdated(function ($state, $set) {
+                                $set('slug', Str::slug($state));
+                            }),
+                        TextInput::make('slug')
+                            ->maxLength(255)
+                            ->disabled()
+                            ->dehydrated(true)
+                            ->unique(Category::class, 'slug', ignoreRecord: true),
+                        Textarea::make('description')
+                            ->label('Descripción')
+                            ->columnSpan(2),
+                    ]),
             ]);
     }
-
     public static function table(Table $table): Table
     {
         return $table
