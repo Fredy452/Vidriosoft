@@ -48,6 +48,18 @@ class Login extends Component
     }
 
     /**
+     * Render the component.
+     */
+    public function mount()
+    {
+        // Solo precargar credenciales en ambiente local o de desarrollo
+        if (app()->environment('production', 'development')) {
+            $this->email = 'admin@test.com';
+            $this->password = 'admin123';
+        }
+    }
+
+    /**
      * Ensure the authentication request is not rate limited.
      */
     protected function ensureIsNotRateLimited(): void
